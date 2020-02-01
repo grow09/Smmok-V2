@@ -10,7 +10,7 @@ counter = 0
 
 chromeOptions = webdriver.ChromeOptions() 
 prefs = {"profile.managed_default_content_settings.images":2} 
-chromeOptions.add_extension('C:\\Users\\grove\\Desktop\\Scripts\\anticaptcha.crx')
+chromeOptions.add_extension('') # path to anticaptcha extension
 chromeOptions.add_experimental_option("prefs",prefs) 
 chromeOptions.add_argument('--proxy-server=%s' % PROXY[counter]) 
 driver = webdriver.Chrome(chrome_options=chromeOptions) 
