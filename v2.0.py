@@ -5,8 +5,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import  Options
 import datetime
 
+
 PROXY = ['','',''] # your proxyes
 counter = 0
+
 
 chromeOptions = webdriver.ChromeOptions() 
 prefs = {"profile.managed_default_content_settings.images":2} 
@@ -17,12 +19,14 @@ driver = webdriver.Chrome(chrome_options=chromeOptions)
 
 
 time_ = time.strftime("%d.%m", time.localtime())
-file = open("C:\\Users\\grove\\Desktop\\Scripts\\Smmok\\answ_"+time_+".csv", 'w')
+file = open(""+time_+".csv", 'w') # if you need file with balances in you account add path to csv file or delete this row
+
 
 accounts = ['','',
 '', '']   # your accounts ['login', 'pass', 'login', 'pass']
 i = 0
 j = 1
+
 
 def check_proxy():
     global counter
@@ -45,6 +49,7 @@ def reconnection():
     driver = webdriver.Chrome(chrome_options=chromeOptions) 
     logining()
 
+    
 def logining():
     driver.get("https://whoer.net")
     time.sleep(10)
@@ -62,6 +67,7 @@ def logining():
     driver.find_element_by_class_name("ui-dialog-buttonset").click() 
     working()
 
+    
 def working():
     global i
     global j
@@ -83,8 +89,8 @@ def working():
             driver.find_element_by_name('withdraw_wmr').send_keys('Z792976401629')
             driver.find_element_by_class_name('submitBtn').click()
             time.sleep(120)
-        driver.get("https://api.telegram.org/&text="+accounts[i] + "|" + balance)
-        # file = open("C:\\Users\\grove\\Desktop\\Scripts\\Smmok\\answ_"+time_+'.csv', 'a')
+        driver.get("https://api.telegram.org/&text="+accounts[i] + "|" + balance) # row to send balances to your telegram bot
+        # file = open(""+time_+'.csv', 'a') # again rows to write balance from accounts
         # file.write(accounts[i]+"|"+balance+'\n')
         # file.close()
         if j == len(accounts) - 1:
@@ -110,6 +116,7 @@ def working():
         time.sleep(300)
         working()
         
+        
 def opening(func):
     def wrapper():
         driver.find_element_by_xpath("//a[@class='button projectDetails']").click()
@@ -125,6 +132,7 @@ def opening(func):
         driver.find_element_by_xpath("//button[@type='button']").click()
         working()
     return wrapper
+    
     
 @opening
 def add_friend():
@@ -143,6 +151,7 @@ def add_friend():
         working()
     time.sleep(2)
 
+    
 @opening
 def subscribe():
     try:
@@ -154,6 +163,7 @@ def subscribe():
     except:
         second_chance()
 
+        
 def second_chance():
     try:
         driver.find_element_by_xpath("//button[@id='public_subscribe']").click()
@@ -174,6 +184,7 @@ def second_chance():
     driver.find_element_by_xpath("//button[@type='button']").click()
     working()
 
+    
 def look():
     driver.find_element_by_xpath("//a[@class='button projectDetails']").click()
     driver.implicitly_wait(3)
@@ -196,6 +207,7 @@ def look():
         working()
     working()
 
+    
 @opening
 def like():
     try:
@@ -211,6 +223,7 @@ def like():
         driver.find_element_by_xpath("//button[2]").click()
         working()
 
+        
 @opening    
 def like_repost():  
     try:
@@ -226,6 +239,7 @@ def like_repost():
         driver.find_element_by_xpath("//button[2]").click()
         working()
 
+# this function dont use in this version but it function to exit from vk account     
 def out_():
     driver.get("https://smmok14.ru/welcome/logout")
     driver.get("https://vk.com/")
@@ -235,6 +249,7 @@ def out_():
     driver.find_element_by_xpath("//a[@id='top_logout_link']").click()
     check_proxy()
 
+    
 if __name__ == '__main__':
     try:
         logining()
